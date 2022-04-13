@@ -1,0 +1,59 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: gateway
+spec:
+  to:
+    kind: Service
+    name: gateway
+  port:
+    targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway
+  labels:
+    app: gateway
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: gateway
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway
+  labels:
+    app: gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway
+  template:
+    metadata:
+      labels:
+        app: gateway
+    spec:
+      containers:
+        - name: app
+          image: quay.io/jonkey/biz-platform-gateway
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: spring.cloud.consul.host
+              value: consul-server
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+              scheme: HTTP
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+              scheme: HTTP

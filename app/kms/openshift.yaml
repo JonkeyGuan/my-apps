@@ -1,0 +1,59 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: kms
+spec:
+  to:
+    kind: Service
+    name: kms
+  port:
+    targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kms
+  labels:
+    app: kms
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: kms
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kms
+  labels:
+    app: kms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kms
+  template:
+    metadata:
+      labels:
+        app: kms
+    spec:
+      containers:
+        - name: app
+          image: quay.io/jonkey/biz-platform-kms
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: spring.cloud.consul.host
+              value: consul-server
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+              scheme: HTTP
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+              scheme: HTTP

@@ -1,0 +1,59 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: email
+spec:
+  to:
+    kind: Service
+    name: email
+  port:
+    targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: email
+  labels:
+    app: email
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: email
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: email
+  labels:
+    app: email
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: email
+  template:
+    metadata:
+      labels:
+        app: email
+    spec:
+      containers:
+        - name: app
+          image: quay.io/jonkey/biz-platform-email
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: spring.cloud.consul.host
+              value: consul-server
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+              scheme: HTTP
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+              scheme: HTTP

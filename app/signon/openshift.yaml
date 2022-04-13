@@ -1,0 +1,59 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: signon
+spec:
+  to:
+    kind: Service
+    name: signon
+  port:
+    targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: signon
+  labels:
+    app: signon
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: signon
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: signon
+  labels:
+    app: signon
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: signon
+  template:
+    metadata:
+      labels:
+        app: signon
+    spec:
+      containers:
+        - name: app
+          image: quay.io/jonkey/biz-platform-signon
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: spring.cloud.consul.host
+              value: consul-server
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+              scheme: HTTP
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+              scheme: HTTP
