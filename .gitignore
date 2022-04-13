@@ -10,3 +10,7 @@
 
 # Built Visual Studio Code Extensions
 *.vsix
+.DS_Store
+**/.DS_Store
+*.jar
+**/*.jar
