@@ -1,0 +1,14 @@
+global:
+  name: consul
+  datacenter: dc1
+  image: registry.connect.redhat.com/hashicorp/consul:1.11.4-ubi 
+  imageK8S: registry.connect.redhat.com/hashicorp/consul-k8s-control-plane:0.42.0-ubi
+  openshift:
+    enabled: true
+    
+server:
+  replicas: 1
+  bootstrapExpect: 1
+  disruptionBudget:
+    enabled: true
+    maxUnavailable: 0

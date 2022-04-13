@@ -1,0 +1,27 @@
+apiVersion: redis.redis.opstreelabs.in/v1beta1
+kind: Redis
+metadata:
+  name: redis
+spec:
+  kubernetesConfig:
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 101m
+        memory: 128Mi
+    image: 'quay.io/opstree/redis:v6.2.5'
+    imagePullPolicy: IfNotPresent
+    serviceType: ClusterIP
+  storage:
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+  redisExporter:
+    enabled: false
+    image: 'quay.io/opstree/redis-exporter:1.0'
