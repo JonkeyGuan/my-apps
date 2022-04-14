@@ -1,0 +1,10 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: concul
+spec:
+  to:
+    kind: Service
+    name: consul-ui
+  port:
+    targetPort: http

@@ -64,3 +64,4 @@ spec:
       - name: storage
         persistentVolumeClaim:
           claimName: storage
+          

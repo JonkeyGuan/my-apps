@@ -12,3 +12,6 @@ server:
   disruptionBudget:
     enabled: true
     maxUnavailable: 0
+
+client:
+  enabled: false
