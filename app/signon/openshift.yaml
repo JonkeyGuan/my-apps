@@ -57,3 +57,10 @@ spec:
               path: /actuator/health
               port: 8080
               scheme: HTTP
+          volumeMounts:
+          - name: storage
+            mountPath: /storage
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          claimName: storage
