@@ -5,7 +5,7 @@ metadata:
 spec:
   to:
     kind: Service
-    name: runtime
+    name: obpm-runtime
   port:
     targetPort: http
 ---

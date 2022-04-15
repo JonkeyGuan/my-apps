@@ -18,8 +18,8 @@ data:
         server {
             listen       8080;
             server_name  localhost;
-            location / {
-                root   /usr/share/nginx/html;
+            location /static {
+                root  /usr/share/nginx/html;
                 index  index.html index.htm;
             }
             error_page   500 502 503 504  /50x.html;
@@ -38,26 +38,8 @@ data:
                 add_header 'Access-Control-Allow-Methods' 'GET,POST,DELETE,PUT';
                 add_header 'Access-Control-Allow-Header' 'Content-Type,*';
             }
-            location /obpm-kms {
-                proxy_pass http://gateway:8080/kms;
-                add_header 'Access-Control-Allow-Origin' '*';
-                add_header 'Access-Control-Allow-Methods' 'GET,POST,DELETE,PUT';
-                add_header 'Access-Control-Allow-Header' 'Content-Type,*';
-            }
-            location /email {
-                proxy_pass http://gateway:8080/email;
-                add_header 'Access-Control-Allow-Origin' '*';
-                add_header 'Access-Control-Allow-Methods' 'GET,POST,DELETE,PUT';
-                add_header 'Access-Control-Allow-Header' 'Content-Type,*';
-            }
-            location /message {
-                proxy_pass http://gateway:8080/message;
-                add_header 'Access-Control-Allow-Origin' '*';
-                add_header 'Access-Control-Allow-Methods' 'GET,POST,DELETE,PUT';
-                add_header 'Access-Control-Allow-Header' 'Content-Type,*';
-            }
-            location /obpm-designer {
-                proxy_pass http://designer:8082/designer;
+            location /designer {
+                proxy_pass http://designer:8080/designer;
                 add_header 'Access-Control-Allow-Origin' '*';
                 add_header 'Access-Control-Allow-Methods' 'GET,POST,DELETE,PUT';
                 add_header 'Access-Control-Allow-Header' 'Content-Type,*';

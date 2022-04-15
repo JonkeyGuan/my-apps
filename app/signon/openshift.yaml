@@ -5,7 +5,7 @@ metadata:
 spec:
   to:
     kind: Service
-    name: signon
+    name: obpm-signon
   port:
     targetPort: http
 ---
@@ -59,13 +59,13 @@ spec:
               value: consul-server
           livenessProbe:
             httpGet:
-              path: /actuator/health
+              path: /signon/actuator/health
               port: 8010
               scheme: HTTP
               initialDelaySeconds: 20
           readinessProbe:
             httpGet:
-              path: /actuator/health
+              path: /signon/actuator/health
               port: 8010
               scheme: HTTP
               initialDelaySeconds: 20
