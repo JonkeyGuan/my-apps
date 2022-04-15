@@ -17,7 +17,7 @@ metadata:
     app: signon
 spec:
   ports:
-    - port: 8080
+    - port: 8010
       name: http
   selector:
     app: signon
@@ -43,20 +43,32 @@ spec:
           image: quay.io/jonkey/biz-platform-signon
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 8010
           env:
+            - name: myapps.storage.root
+              value: /storage
+            - name: spring.datasource.url
+              value: jdbc:mysql://mysql:3306/mydb?characterEncoding=UTF-8&serverTimezone=GMT&useSSL=false
+            - name: spring.datasource.username
+              value: "mysql"
+            - name: spring.datasource.password
+              value: "mysql"
+            - name: spring.redis.host
+              value: redis
             - name: spring.cloud.consul.host
               value: consul-server
           livenessProbe:
             httpGet:
               path: /actuator/health
-              port: 8080
+              port: 8010
               scheme: HTTP
+              initialDelaySeconds: 20
           readinessProbe:
             httpGet:
               path: /actuator/health
-              port: 8080
+              port: 8010
               scheme: HTTP
+              initialDelaySeconds: 20
           volumeMounts:
           - name: storage
             mountPath: /storage
@@ -64,3 +76,4 @@ spec:
       - name: storage
         persistentVolumeClaim:
           claimName: storage
+

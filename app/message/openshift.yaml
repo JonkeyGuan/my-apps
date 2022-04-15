@@ -17,7 +17,7 @@ metadata:
     app: message
 spec:
   ports:
-    - port: 8080
+    - port: 8084
       name: http
   selector:
     app: message
@@ -43,19 +43,29 @@ spec:
           image: quay.io/jonkey/biz-platform-message
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 8084
           env:
+            - name: myapps.storage.root
+              value: /storage
+            - name: spring.datasource.url
+              value: jdbc:mysql://mysql:3306/mydb?characterEncoding=UTF-8&serverTimezone=GMT
+            - name: spring.datasource.username
+              value: "mysql"
+            - name: spring.datasource.password
+              value: "mysql"
+            - name: spring.redis.host
+              value: redis
             - name: spring.cloud.consul.host
               value: consul-server
           livenessProbe:
             httpGet:
               path: /actuator/health
-              port: 8080
+              port: 8084
               scheme: HTTP
           readinessProbe:
             httpGet:
               path: /actuator/health
-              port: 8080
+              port: 8084
               scheme: HTTP
           volumeMounts:
           - name: storage
