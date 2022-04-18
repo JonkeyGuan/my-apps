@@ -1,2 +1,2 @@
 
-oc delete all,secret,pvc --selector template=mysql-persistent-template
+oc delete all,secret,pvc,configMap --selector template=mysql-persistent-template
