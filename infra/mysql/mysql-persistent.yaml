@@ -110,6 +110,10 @@ objects:
                     secretKeyRef:
                       key: database-name
                       name: '${DATABASE_SERVICE_NAME}'
+                - name: MYSQL_COLLATION
+                  value: '${MYSQL_COLLATION}'
+                - name: MYSQL_CHARSET
+                  value: '${MYSQL_CHARSET}'
               ports:
                 - containerPort: 3306
               imagePullPolicy: IfNotPresent
@@ -189,6 +193,16 @@ parameters:
     displayName: Version of MySQL Image
     description: 'Version of MySQL image to be used (8.0-el7, 8.0-el8, or latest).'
     value: 8.0-el8
+    required: true
+  - name: MYSQL_COLLATION
+    displayName: Collation of MySQL
+    description: 'Collation of MySQL.'
+    value: utf8_general_ci
+    required: true
+  - name: MYSQL_CHARSET
+    displayName: Charset of MySQL
+    description: 'Charset of MySQL.'
+    value: utf8
     required: true
 labels:
   template: mysql-persistent-template
