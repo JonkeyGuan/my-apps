@@ -52,6 +52,7 @@ apiVersion: route.openshift.io/v1
 metadata:
   name: static
 spec:
+  path: /static/signon/
   to:
     kind: Service
     name: static
