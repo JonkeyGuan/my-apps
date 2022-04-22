@@ -57,18 +57,18 @@ spec:
               value: redis
             - name: spring.cloud.consul.host
               value: consul-server
-          livenessProbe:
-            httpGet:
-              path: /obpm/actuator/health
-              port: 8083
-              scheme: HTTP
-              initialDelaySeconds: 20
-          readinessProbe:
-            httpGet:
-              path: /obpm/actuator/health
-              port: 8083
-              scheme: HTTP
-              initialDelaySeconds: 20
+          # livenessProbe:
+          #   httpGet:
+          #     path: /obpm/actuator/health
+          #     port: 8083
+          #     scheme: HTTP
+          #     initialDelaySeconds: 20
+          # readinessProbe:
+          #   httpGet:
+          #     path: /obpm/actuator/health
+          #     port: 8083
+          #     scheme: HTTP
+          #     initialDelaySeconds: 20
           volumeMounts:
           - name: storage
             mountPath: /storage
