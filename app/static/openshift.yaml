@@ -15,9 +15,13 @@ data:
         sendfile        on;
         keepalive_timeout  65;
         gzip  on;
+
         server {
             listen       8080;
-            server_name  localhost;
+            # server_name  0.0.0.0;
+
+            access_log /dev/stdout;
+
             location /static {
                 root  /usr/share/nginx/html;
                 index  index.html index.htm;
@@ -27,19 +31,31 @@ data:
                 root   html;
             }
             location /signon {
-                proxy_pass http://gateway:8080/signon;
+                proxy_pass http://gateway:8080;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Host $server_name;
                 add_header 'Access-Control-Allow-Origin' '*';
                 add_header 'Access-Control-Allow-Methods' 'GET,POST,DELETE,PUT';
                 add_header 'Access-Control-Allow-Header' 'Content-Type,*';
             }
             location /obpm {
-                proxy_pass http://gateway:8080/obpm;
+                proxy_pass http://gateway:8080;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Host $server_name;
                 add_header 'Access-Control-Allow-Origin' '*';
                 add_header 'Access-Control-Allow-Methods' 'GET,POST,DELETE,PUT';
                 add_header 'Access-Control-Allow-Header' 'Content-Type,*';
             }
             location /designer {
-                proxy_pass http://designer:8080/designer;
+                proxy_pass http://designer:8082;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Host $server_name;
                 add_header 'Access-Control-Allow-Origin' '*';
                 add_header 'Access-Control-Allow-Methods' 'GET,POST,DELETE,PUT';
                 add_header 'Access-Control-Allow-Header' 'Content-Type,*';
@@ -52,7 +68,6 @@ apiVersion: route.openshift.io/v1
 metadata:
   name: static
 spec:
-  path: /static/signon/
   to:
     kind: Service
     name: static
