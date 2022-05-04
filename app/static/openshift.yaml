@@ -66,8 +66,33 @@ data:
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
-  name: static
+  name: user
 spec:
+  path: /static/signon/
+  to:
+    kind: Service
+    name: static
+  port:
+    targetPort: http
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: designer
+spec:
+  path: /designer
+  to:
+    kind: Service
+    name: static
+  port:
+    targetPort: http
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: admin
+spec:
+  path: /static/domain/
   to:
     kind: Service
     name: static
