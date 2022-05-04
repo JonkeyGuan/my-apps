@@ -1,4 +1,4 @@
 
-docker build -t quay.io/jonkey/biz-platform-designer .
+docker build -t quay.io/jonkey/app-designer .
 
-docker push quay.io/jonkey/biz-platform-designer
+docker push quay.io/jonkey/app-designer

@@ -1,4 +1,4 @@
 
-docker build -t quay.io/jonkey/biz-platform-static .
+docker build -t quay.io/jonkey/app-static .
 
-docker push quay.io/jonkey/biz-platform-static
+docker push quay.io/jonkey/app-static
