@@ -1,6 +1,7 @@
 
 oc process -f mysql-persistent.yaml \
 --param MYSQL_VERSION=8.0-el8 \
+--param MYSQL_ROOT_PASSWORD=mysql \
 --param MYSQL_USER=mysql \
 --param MYSQL_PASSWORD=mysql \
 --param MYSQL_DATABASE=mydb \
