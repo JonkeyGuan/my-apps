@@ -18,11 +18,10 @@ data:
 
         server {
             listen       8080;
-            # server_name  0.0.0.0;
 
             access_log /dev/stdout;
 
-            location /static {
+            location / {
                 root  /usr/share/nginx/html;
                 index  index.html index.htm;
             }
@@ -66,18 +65,6 @@ data:
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
-  name: user
-spec:
-  path: /static/signon/
-  to:
-    kind: Service
-    name: static
-  port:
-    targetPort: http
----
-kind: Route
-apiVersion: route.openshift.io/v1
-metadata:
   name: designer
 spec:
   path: /designer
@@ -90,9 +77,8 @@ spec:
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
-  name: admin
+  name: static
 spec:
-  path: /static/domain/
   to:
     kind: Service
     name: static
