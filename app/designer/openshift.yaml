@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: quay.io/jonkey/apps-designer
+          image: quay.io/jonkey/apps-designer:0601-2
           imagePullPolicy: Always
           ports:
             - containerPort: 8082

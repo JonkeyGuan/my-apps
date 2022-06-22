@@ -116,7 +116,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: quay.io/jonkey/apps-static
+          image: quay.io/jonkey/apps-static:0601-2
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
