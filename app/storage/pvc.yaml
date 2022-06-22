@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: storage
 spec:
-  storageClassName: efs-sc
+  storageClassName: nfs-storage-provisioner
   accessModes:
   - ReadWriteMany
   resources:
